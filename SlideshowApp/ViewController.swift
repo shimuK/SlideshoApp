@@ -23,8 +23,8 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         // 初期画像設定
-        let i = UIImage(named: img[choiceImgNumber])
-        slideImage.image = i
+        let initImage = UIImage(named: img[choiceImgNumber])
+        slideImage.image = initImage
     }
     
     @IBAction func next(_ sender: Any) {
@@ -54,12 +54,11 @@ class ViewController: UIViewController {
             resumeStopBtn.setTitle("停止", for: UIControl.State.normal)
 
             // アニメーション用画像設定
-            calcChoiceNumber(calcNum:1)
-            let j = UIImage(named: img[choiceImgNumber])!
-            calcChoiceNumber(calcNum:1)
-            let k = UIImage(named: img[choiceImgNumber])!
+            let i = UIImage(named: img[0])!
+            let j = UIImage(named: img[1])!
+            let k = UIImage(named: img[2])!
             var imageListArray :Array<UIImage> = []
-            imageListArray.append(slideImage.image!)
+            imageListArray.append(i)
             imageListArray.append(j)
             imageListArray.append(k)
             // アニメーションセット（間隔：2秒、繰り返し）
