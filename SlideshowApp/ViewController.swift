@@ -12,6 +12,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var slideImage: UIImageView!
     @IBOutlet weak var nextBtn: UIButton!
     @IBOutlet weak var backBtn: UIButton!
+    @IBOutlet weak var resumeStopBtn: UIButton!
     
     // 画像名List
     let img: [String] = ["img001_640x427.jpeg", "img002_640x427.jpeg", "img003_640x360.jpeg"]
@@ -42,13 +43,15 @@ class ViewController: UIViewController {
         // アニメーションモードがONならOFFにする
         if slideImage.isAnimating == true {
             slideImage.stopAnimating()
-            // ボタン押下設定
+            // アニメーション停止時のボタン設定
             nextBtn.isEnabled = true
             backBtn.isEnabled = true
+            resumeStopBtn.setTitle("再生", for: UIControl.State.normal)
         } else {
-            // ボタン押下設定
+            // アニメーション開始時のボタン設定
             nextBtn.isEnabled = false
             backBtn.isEnabled = false
+            resumeStopBtn.setTitle("停止", for: UIControl.State.normal)
 
             // アニメーション用画像設定
             calcChoiceNumber(calcNum:1)
