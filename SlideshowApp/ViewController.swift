@@ -70,6 +70,16 @@ class ViewController: UIViewController {
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+            // segueから遷移先のEnlargedImageViewControllerを取得する
+            let enlargedImageController:EnlargedImageViewController = segue.destination as! EnlargedImageViewController
+        enlargedImageController.dispImg = slideImage.image
+    }
+    
+    @IBAction func unwind(_ segue: UIStoryboardSegue) {
+        
+    }
+        
     // 関数：画像Index計算
     func calcChoiceNumber(calcNum:Int) {
         // numは+1または-1が入る

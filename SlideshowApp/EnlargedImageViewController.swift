@@ -11,10 +11,13 @@ class EnlargedImageViewController: UIViewController {
     
     @IBOutlet weak var enlargedImage: UIImageView!
     
+    var dispImg:UIImage!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        enlargedImage.image = dispImg
     }
     
 
