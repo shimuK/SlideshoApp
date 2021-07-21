@@ -18,6 +18,10 @@ class ViewController: UIViewController {
     let img: [String] = ["img001_640x427.jpeg", "img002_640x427.jpeg", "img003_640x360.jpeg"]
     // 表示中の画像配列index
     var choiceImgNumber:Int = 0
+    // タイマー変数
+    var timer: Timer!
+    // タイマー時間
+    var timer_sec: Int = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +29,15 @@ class ViewController: UIViewController {
         // 初期画像設定
         let initImage = UIImage(named: img[choiceImgNumber])
         slideImage.image = initImage
+    }
+    
+    @objc func updateTimer(_ timer: Timer) {
+        if timer_sec % 2 == 0 {
+            calcChoiceNumber(calcNum: 1)
+            let showImage = UIImage(named: img[choiceImgNumber])
+            slideImage.image = showImage
+        }
+        self.timer_sec += 1
     }
     
     @IBAction func next(_ sender: Any) {
@@ -40,32 +53,26 @@ class ViewController: UIViewController {
     }
     
     @IBAction func resumeStop(_ sender: Any) {
-        // アニメーションモードがONならOFFにする
-        if slideImage.isAnimating == true {
-            slideImage.stopAnimating()
-            // アニメーション停止時のボタン設定
-            nextBtn.isEnabled = true
-            backBtn.isEnabled = true
-            resumeStopBtn.setTitle("再生", for: UIControl.State.normal)
-        } else {
+        
+        if self.timer == nil {
             // アニメーション開始時のボタン設定
             nextBtn.isEnabled = false
             backBtn.isEnabled = false
             resumeStopBtn.setTitle("停止", for: UIControl.State.normal)
+            
+            // スライドショーおよびタイマー起動
+            self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimer(_:)), userInfo: nil, repeats: true)
+        } else {
+            // アニメーション停止時のボタン設定
+            nextBtn.isEnabled = true
+            backBtn.isEnabled = true
+            resumeStopBtn.setTitle("再生", for: UIControl.State.normal)
 
-            // アニメーション用画像設定
-            let i = UIImage(named: img[0])!
-            let j = UIImage(named: img[1])!
-            let k = UIImage(named: img[2])!
-            var imageListArray :Array<UIImage> = []
-            imageListArray.append(i)
-            imageListArray.append(j)
-            imageListArray.append(k)
-            // アニメーションセット（間隔：2秒、繰り返し）
-            slideImage.animationImages = imageListArray
-            slideImage.animationDuration = 2
-            // アニメーション開始
-            slideImage.startAnimating()
+            // タイマー停止およびリセット
+            self.timer.invalidate()
+            self.timer = nil
+            self.timer_sec = 0
+            
         }
     }
     
